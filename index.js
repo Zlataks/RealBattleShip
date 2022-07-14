@@ -13,6 +13,9 @@ let display = {
     }
 };
 
-/* let guessInput = document.getElementById('guessInput');
+let guessInput = document.getElementById('guessInput');
 let fireButton = document.getElementById('fireButton');
-fireButton.addEventListener('click', display.displayMessage('new message')); */
+fireButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    display.displayMessage(guessInput.value);
+});
