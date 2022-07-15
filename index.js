@@ -17,7 +17,9 @@ let guessInput = document.getElementById('guessInput');
 let fireButton = document.getElementById('fireButton');
 fireButton.addEventListener('click', (e) => {
     e.preventDefault();
-    getLocation(guessInput.value);
+    let location = getLocation(guessInput.value);
+    aboutShips.fire(location);
+    guessInput.value = '';
 });
 
 function getLocation (input) {
@@ -32,3 +34,25 @@ function getLocation (input) {
         return location;
     }
 }
+
+let aboutShips = {
+    ships: [{locations: ['00', '01', '02'], hits: ['', '', '']},
+            {locations: ['30', '31', '32'], hits: ['', '', '']},
+            {locations: ['50', '51', '52'], hits: ['', '', '']}],
+    fire: function(location) {
+        for (let i = 0; i < this.ships.length; i++) {
+            let ship = this.ships[i];
+            for (let i = 0; i < ship.locations.length; i++) {
+                if (ship.locations[i] === location) {
+                    ship.hits[i] = location;
+                    display.displayMessage('HIT!');
+                    display.displayHit(location);
+                    return;
+                } else {
+                    display.displayMessage('You miss');
+                    display.displayMiss(location);
+                }
+            }
+        }
+    }
+};
