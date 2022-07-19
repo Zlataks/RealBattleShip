@@ -36,23 +36,34 @@ function getLocation (input) {
 }
 
 let aboutShips = {
+    numShips: 3,
     ships: [{locations: ['00', '01', '02'], hits: ['', '', '']},
             {locations: ['30', '31', '32'], hits: ['', '', '']},
             {locations: ['50', '51', '52'], hits: ['', '', '']}],
     fire: function(location) {
-        for (let i = 0; i < this.ships.length; i++) {
+        for (let i = 0; i < this.numShips; i++) {
             let ship = this.ships[i];
             for (let i = 0; i < ship.locations.length; i++) {
                 if (ship.locations[i] === location) {
-                    ship.hits[i] = location;
+                    ship.hits[i] = 'hit';
                     display.displayMessage('HIT!');
                     display.displayHit(location);
-                    return;
+                    return true;
                 } else {
                     display.displayMessage('You miss');
                     display.displayMiss(location);
+                    return false;
                 }
             }
         }
+    },
+    isSunk: function(ship) {
+        for (let i = 0; i < ship.locations.length; i++) {
+            if (ship.hits[i] !== 'hit') {
+                return false;
+            }
+        }
+        return true;
     }
 };
+
